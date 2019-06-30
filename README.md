@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.com/zevektor/pivot-report.svg?branch=master)](https://travis-ci.com/zevektor/pivot-report)
+[![Build Status](https://travis-ci.com/zevektor/pivot-report.svg?branch=master)](https://travis-ci.com/zevektor/pivot-report)  [![codecov](https://codecov.io/gh/zevektor/pivot-report/branch/master/graph/badge.svg)](https://codecov.io/gh/zevektor/pivot-report)
+
 
 # Pivot Report
 
