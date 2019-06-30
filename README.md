@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/zevektor/pivot-report.svg?branch=master)](https://travis-ci.com/zevektor/pivot-report)
+
 # Pivot Report
 
 ## Overview
