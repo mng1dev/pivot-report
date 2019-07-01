@@ -1,7 +1,10 @@
 package com.vektor.pivot.storage;
 
 import com.vektor.pivot.contracts.IAggregationNode;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -15,6 +18,10 @@ public class TestAggregationLevel {
     private static final Function<List<Integer>, Integer> SUM_FUNCTION = (
             integers -> integers.stream().mapToInt(i->i).sum()
     );
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
 
     @Test
     public void TestAggregationLevelSizeSingleLeaf(){
@@ -102,6 +109,16 @@ public class TestAggregationLevel {
     }
 
     @Test
+    public void TestAggregationLevelGetKeyShouldExist(){
+        AggregationLevel root = new AggregationLevel();
+        root.add(new ArrayList<>(Collections.singletonList("a")), 1);
+
+        expectedException.expect(AssertionError.class);
+
+        root.getNode("b");
+    }
+
+    @Test
     public void TestAggregationLevelPartialPathSingleBranch(){
         AggregationLevel root = new AggregationLevel();
         root.add(new ArrayList<>(Arrays.asList("a", "b")), 1);
@@ -129,6 +146,15 @@ public class TestAggregationLevel {
         root.add(new ArrayList<>(Arrays.asList("a", "b")), 10);
         root.add(new ArrayList<>(Arrays.asList("a", "c")), 20);
         root.aggregate(SUM_FUNCTION);
+        assertEquals(30, root.getFunctionResult().intValue());
+    }
+
+    @Test
+    public void TestAggregationLevelFunctionResultNotNull(){
+        AggregationLevel root = new AggregationLevel();
+
+        expectedException.expect(AssertionError.class);
+
         assertEquals(30, root.getFunctionResult().intValue());
     }
 }

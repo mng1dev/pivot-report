@@ -1,6 +1,8 @@
 package com.vektor.pivot.storage;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,13 +19,25 @@ public class TestLeaf {
             integers -> integers.stream().mapToInt(i->i).sum()
     );
 
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
+
     @Test
     public void TestLeafAdd() {
         Leaf leaf = new Leaf();
         leaf.add(new ArrayList<>(Collections.emptyList()), 10);
         assertEquals(1, leaf.size());
         assertEquals(10, leaf.getValues().get(0).intValue());
+    }
 
+    @Test
+    public void TestLeafAddExpectsEmptyPath() {
+        Leaf leaf = new Leaf();
+
+        expectedException.expect(AssertionError.class);
+
+        leaf.add(new ArrayList<>(Collections.singletonList("a")), 10);
     }
 
     @Test
@@ -50,6 +64,16 @@ public class TestLeaf {
         leaf.add(new ArrayList<>(Collections.emptyList()), 20);
         leaf.aggregate(SUM_FUNCTION);
         assertEquals(30, leaf.getFunctionResult().intValue());
+    }
+
+
+    @Test
+    public void TestLeafFunctionResultNotNull() {
+        Leaf leaf = new Leaf();
+
+        expectedException.expect(AssertionError.class);
+
+        leaf.getFunctionResult();
     }
 
 
